@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+<head>
+<link href='bootstrap.css' rel='stylesheet'>
+</head>
+<body>
+
+
+<div id="map" class='rela2'></div>
+<div  class='rela'>
+<div class="card">
+  <img class="card-img-top imagenes" src="espi.png" alt="Card image cap">
+  <div class="card-block">
+    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+  </div>
+</div>
+</div>
+<style>
+.imagenes{
+width:200px;
+height:150px
+}
+.rela2 {
+ float:left;
+  top: -20px;
+  
+  width:70%;
+  height:450px;
+}
+
+.rela{
+  float:left;
+  top: -20px;
+ 
+  width:30%;
+  height:450px;
+}
+
+</style>
+<script>
+
+function myMap() {
+  var mapCanvas = document.getElementById("map");
+  var mapOptions = {
+    center: new google.maps.LatLng(18.521283, -69.883229
+), 
+    zoom: 10
+  }
+  var latitud=(18.521283);
+  var longitud =(-69.883229);
+  var map = new google.maps.Map(mapCanvas, mapOptions);
+  
+  var coorMarcador = new google.maps.LatLng(latitud,longitud);
+  var marcador = new google.maps.Marker({
+/*Creamos un marcador*/
+                position: coorMarcador, /*Lo situamos en nuestro punto */
+                map: map, /* Lo vinculamos a nuestro mapa */
+                title: "Dónde estoy?" 
+            });
+	marcador.addListener('mouseover', function() {
+    /*map.setZoom(8);
+   map.setCenter(marker.getPosition());  */
+   alert('pasaste sobre el marcador');
+  });
+					
+}
+
+</script>
+
+<script src="https://maps.googleapis.com/maps/api/js?callback=myMap"></script>
+<script src="https://maps.googleapis.com/maps/api/js?callback=myMap"></script>
+
+</body>
+</html>
+</html>

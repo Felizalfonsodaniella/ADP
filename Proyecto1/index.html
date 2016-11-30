@@ -1,0 +1,532 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width">
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+    <title>JS Bin</title>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCH7BUCoBIt3AFY6_ertXOw-Hh60bVeFHw&libraries=places&callback=initMap" async defer></script>
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <title>JS Bin</title>
+    <style>
+        body {
+            background: #f7f7f7;
+            font-family: Segoe UI light;
+            margin: 0;
+            overflow: hidden;
+        }
+        
+        header {
+            background: #333;
+            color: #fff;
+            font-weight: bold;
+            padding: 0.5rem 1rem;
+            display: flex;
+            position: relative;
+        }
+        
+        .header.title {
+            font-size: 13px;
+            cursor: pointer;
+        }
+        
+        header .time {
+            position: absolute;
+            right: 70px;
+            top: 50%;
+            transform: translate(-1rem, -50%);
+            display: flex;
+            font-family: Segoe UI light;
+            font-size: 13px;
+            font-weight: bold;
+            font-style: normal;
+            -webkit-font-smoothing: antialiased;
+            align-items: center;
+        }
+        
+        header .date {
+            position: absolute;
+            right: 0;
+            display: flex;
+            font-size: 13px;
+            top: 50%;
+            transform: translate(-1rem, -50%);
+        }
+        
+        .card {
+            background: #fff;
+            width: 600px;
+            height: 100%;
+            position: ;
+            border: none;
+            border-radius: 1px;
+            box-shadow: 0px 0px 7px #999;
+            z-index: 2;
+            line-height: 1.4;
+            box-sizing: border-box;
+            transition: all 0.15s ease-in-out;
+            overflow-y: scroll;
+        }
+        
+        .card .one {
+            height: 50%;
+            width: 100%;
+            background: lightblue;
+            position: relative;
+            line-height: 1.4;
+            box-sizing: border-box;
+        }
+        
+        .card .one img {
+            width: 100%;
+            height: 100%;
+        }
+        
+        .card .two {
+            height: 50%;
+            width: 100%;
+            background: #fdfdfd;
+            position: relative;
+            line-height: 1.4;
+            box-sizing: border-box;
+            padding: 1rem;
+        }
+        
+        .card .one .card-title {
+            font-size: 22px;
+            position: ;
+            bottom: 0;
+            margin: -0rem 1rem 1rem;
+            padding: 1rem 0rem;
+            color: #fff;
+        }
+        
+        .card .two p {
+            margin: 0;
+            padding: 0;
+        }
+        
+        .card-item {
+            display: flex;
+            align-items: center;
+        }
+        
+        .card-item .icon {
+            width: 20px;
+            height: 20px;
+            text-align: center;
+            font-size: 16px;
+        }
+        
+        .card-item .info {
+            margin-left: 0.6rem;
+            font-size: 16px;
+        }
+        
+        .card-item a {
+            color: #1989CA;
+            text-decoration: none;
+        }
+        
+        .card-item a:hover {
+            text-decoration: underline;
+        }
+        
+        .card .two hr {
+            border: none;
+            height: 1px;
+            width: 100%;
+            background: #ccc;
+            margin: 1rem 0px;
+        }
+        
+        .card .one .rating {
+            position: absolute;
+            bottom: 0;
+            right: 0;
+            padding: 1rem;
+            font-size: 20px;
+            color: #fff;
+        }
+        
+        .card .one .rating .number {
+            font-weight: bolder;
+            font-size: 22px;
+        }
+        
+        .card .one .subtitle {
+            position: absolute;
+            bottom: 0;
+            padding: 0.7rem 1rem;
+            color: #fff;
+            font-size: 16px;
+        }
+        
+        .p {
+            margin: 0;
+        }
+        
+        .list-group {
+            padding-left: 0;
+            margin-bottom: 0;
+        }
+        
+        .list-group-item {
+            position: relative;
+            display: block;
+            padding: 0.75rem 1.25rem;
+            margin-bottom: -1px;
+            background-color: #fff;
+            border: 1px solid #ddd;
+            font-weight: lighter;
+        }
+        
+        .tag {
+            display: inline-block;
+            width: 80px;
+            padding: 0.55em 0.4em;
+            font-size: 14px;
+            font-weight: bold;
+            line-height: 1;
+            color: #fff;
+            text-align: center;
+            white-space: nowrap;
+            vertical-align: middle;
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            transform: translate(-0%, -50%);
+            border-radius: 0.25rem;
+        }
+        
+        .tag-default {
+            background-color: #818a91;
+        }
+        
+        .card .precio {
+            margin-bottom: 55px;
+        }
+        
+        .title-box {
+            width: 100%;
+            background: rgba(10, 10, 10, 0.5);
+            position: absolute;
+            bottom: 0;
+            min-height: 20px;
+        }
+        
+        #map {
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+        }
+        
+        .container {
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            display: flex;
+        }
+        /* --------------------- */
+        /* SCROLLBAR STYLE */
+        /* --------------------- */
+        
+        .card::-webkit-scrollbar {
+            width: 10px;
+        }
+        
+        .card::-webkit-scrollbar-track-piece {
+            background: #eee;
+            height: 10px;
+            box-shadow: 0px 0px 1px #ccc inset;
+        }
+        
+        .card::-webkit-scrollbar-thumb {
+            background: #aaa;
+            height: 10px;
+            width: 10px;
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <span class="header title">Proyecto Administracion de Proyecto</span>
+        <div class="time">
+            <label class="hh">00</label> :
+            <label class="mm">00</label> :
+            <label class="ss">00</label> &nbsp &nbsp -
+        </div>
+        <div class="date">
+            <span class="day"></span> /
+            <span class="month"></span> /
+            <span class="year"></span>
+        </div>
+    </header>
+    <div class="container">
+        <div class="card">
+            <div class="one">
+                <img src="http://mdbootstrap.com/images/reg/reg%20(59).jpg" alt="">
+                <div class="title-box">
+                    <h4 class="card-title">Estacion Total</h4>
+                    <span class="subtitle">Gasolinera</span>
+                    <div class="rating">
+                        <span class="number">4.0</span>
+                        <i class="fa fa-star"></i>
+                        <i class="fa fa-star"></i>
+                        <i class="fa fa-star"></i>
+                        <i class="fa fa-star"></i>
+                        <i class="fa fa-star-o"></i>
+                    </div>
+                </div>
+            </div>
+            <div class="two">
+                <div class="card-item">
+                    <div class="icon"><i class="fa fa-phone"></i></div>
+                    <div class="info"><label class="phone">+1 (809)-595-6264</label></div>
+                </div>
+                <br>
+                <div class="card-item">
+                    <div class="icon"><i class="fa fa-map-marker"></i></div>
+                    <div class="info"><label class="phone">Aut. Las Americas KM 5, Santo Domingo</label></div>
+                </div>
+                <br>
+                <div class="card-item">
+                    <div class="icon"><i class="fa fa-globe"></i></div>
+                    <div class="info"><a href="#" class="website">http://www.total.com.do</a></div>
+                </div>
+                <br>
+                <div class="card-item">
+                    <div class="icon"><i class="fa fa-clock-o"></i></div>
+                    <div class="info"><label class="horario">Abierto las 24 horas</label></div>
+                </div>
+                <hr>
+                <div class="precio">
+                    <h4 class="p">Precios del Combustible</h4>
+                    <ul class="list-group">
+                        <li class="list-group-item">
+                            <span class="tag tag-default tag-pill float-xs-right">RD$202.80</span> Gasolina Premium
+                        </li>
+                        <li class="list-group-item">
+                            <span class="tag tag-default tag-pill float-xs-right">RD$186.70</span> Gasolina Regular
+                        </li>
+                        <li class="list-group-item">
+                            <span class="tag tag-default tag-pill float-xs-right">RD$159.10</span> Gasoil Optimo
+                        </li>
+                        <li class="list-group-item">
+                            <span class="tag tag-default tag-pill float-xs-right">RD$145.50</span> Gasoil Regular
+                        </li>
+                        <li class="list-group-item">
+                            <span class="tag tag-default tag-pill float-xs-right">RD$133.00</span> Kerosene
+                        </li>
+                        <li class="list-group-item">
+                            <span class="tag tag-default tag-pill float-xs-right">RD$95.10</span> Gas Licuado de Petróleo (GLP)
+                        </li>
+                        <li class="list-group-item">
+                            <span class="tag tag-default tag-pill float-xs-right">RD$23.22</span> Gas Natural Vehicular (GNV)
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div id="map"></div>
+    </div>
+
+    <script>
+        //CLOCK
+
+        function UpdateClock() {
+
+            //Initializing a new Date
+            var time = new Date();
+
+            //Get data from time
+            var hh = time.getHours();
+            var mm = time.getMinutes();
+            var ss = time.getSeconds();
+
+
+            if (hh < 10) {
+                hh = '0' + hh;
+            }
+            if (mm < 10) {
+                mm = '0' + mm;
+            }
+            if (ss < 10) {
+                ss = '0' + ss;
+            }
+
+            var ampm = (time >= 12) ? "PM" : "AM";
+
+            //Inserting data in DOM
+            $(".hh").text(hh);
+            $(".mm").text(mm);
+            $(".ss").text(ss);
+            $(".zap").text(ampm);
+
+            var day = time.getDate();
+            if (day < 10) {
+                day = '0' + day;
+            }
+            var month = time.getMonth() + 1;
+            if (month < 10) {
+                month = '0' + day;
+            }
+
+            $(".day").text(day);
+            $(".month").text(month);
+            $(".year").text(time.getFullYear());
+        }
+
+        $(document).ready(function() {
+
+        }, setInterval(function() {
+            UpdateClock();
+        }, 1000));
+
+
+
+        //CLOCK
+
+        var map;
+        var infoWindow;
+        var service;
+        var coor = {
+            lat: 18.486058,
+            lng: -69.931212
+        };
+
+        function initMap() {
+            map = new google.maps.Map(document.getElementById('map'), {
+                center: coor,
+                zoom: 12,
+                styles: [{
+                    stylers: [{
+                        visibility: 'simplified'
+                    }]
+                }, {
+                    elementType: 'labels',
+                    stylers: [{
+                        visibility: 'off'
+                    }]
+                }]
+            });
+
+            infoWindow = new google.maps.InfoWindow();
+            service = new google.maps.places.PlacesService(map);
+
+            // The idle event is a debounced event, so we can query & listen without
+            // throwing too many requests at the server.
+            map.addListener('idle', performSearch);
+        }
+
+        function performSearch() {
+            var request = {
+                bounds: map.getBounds(),
+                types: ["gas_station"],
+                keyword: 'Gas Station'
+            };
+            service.radarSearch(request, callback);
+        }
+
+        function callback(results, status) {
+            if (status !== google.maps.places.PlacesServiceStatus.OK) {
+                console.error(status);
+                return;
+            }
+            for (var i = 0, result; result = results[i]; i++) {
+                addMarker(result);
+            }
+        }
+
+        function addMarker(place) {
+
+            var marker = new google.maps.Marker({
+                map: map,
+                position: place.geometry.location,
+                icon: {
+                    url: 'http://mt.google.com/vt/icon/name=icons/spotlight/gas_station_L_8x.png&scale=1'
+                }
+            });
+
+            google.maps.event.addListener(marker, 'click', function() {
+                service.getDetails(place, function(result, status) {
+                    if (status !== google.maps.places.PlacesServiceStatus.OK) {
+                        console.error(status);
+                        return;
+                    }
+
+                    /* ---------------- 
+                    * Get data from place.
+                    * All required data for the card.
+                    ------------ */
+
+                    /* IMAGE*/
+                    var card_img;
+                    if (result.photos[0] != null) {
+                        card_img = result.photos[0].getUrl({
+                            'maxWidth': 500,
+                            'maxHeight': 500
+                        });
+                    } else {
+                        card_img = "http://placehold.it/300?text=NO IMAGE";
+                    }
+
+                    /* TITLE AND SUBTITLE */
+                    var card_title = result.name;
+                    var card_subtitle = "Gasolinera";
+
+                    /* RATING */
+                    var card_rating;
+                    if (result.rating != null) {
+                        card_rating = result.rating;
+                    } else {
+                        card_rating = 0;
+                    }
+
+                    /* PHONE, ADDRESS AND WEBSITE */
+                    var card_phone;
+                    if (result.international_phone_number != null) {
+                        card_phone = result.international_phone_number;
+                    } else {
+                        card_phone = "Sin numero";
+                    }
+
+                    var card_address;
+                    if (result.formatted_address != null) {
+                        card_address = result.vicinity;
+                    } else {
+                        card_address = "Sin direccion";
+                    }
+
+                    var card_website;
+                    if (result.website != null) {
+                        card_website = result.website;
+                    } else {
+                        card_website = "Sin Sitio Web";
+                    }
+                  
+                  	
+                  	//AQUI SE INSERTA LA INFO EN EL SIDEBAR
+                  	//NADA DE LO QUE ESTA ABAJO FUNCIONA PORQUE NO LE PUSE LAS CLASES A LOS ELEMENTOS ARRIBA
+                  	//SI QUIERES BORRA LO QUE ESTA AQUI ABAJO
+                  
+                    $(".header .title").text(card_title);
+                    $(".header img").attr("src", "" + card_img + "");
+                    $(".header .subtitle").text(card_subtitle);
+                    $(".card .middle .phone").text(card_phone);
+                    $(".card .middle .address").text(card_address);
+                    $(".card .middle .website").text(card_website);
+                    $(".n").text(card_rating);
+
+
+                    infoWindow.setContent(result.name);
+                    infoWindow.open(map, marker);
+                });
+            });
+        }
+    </script>
+</body>
+
+</html>
