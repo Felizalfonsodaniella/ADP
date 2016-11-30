@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Simple Map</title>
+	<meta name="viewport" content="initial-scale=1.0">
+	<meta charset="utf-8">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.4/css/bootstrap.min.css" integrity="sha384-2hfp1SzUoho7/TsGGGDaFdsuuDL0LX2hnUp6VkX3CUQ2K4K+xjboZdsXyp4oUHZj" crossorigin="anonymous">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.0.0/jquery.min.js" integrity="sha384-THPy051/pYDQGanwU6poAc/hOdQxjnOEXzbT+OuUAFqNqFjL+4IGLBgCJC3ZOShY" crossorigin="anonymous"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.2.0/js/tether.min.js" integrity="sha384-Plbmg8JY28KFelvJVai01l8WyZzrYWG825m+cZ0eDDS1f7d/js6ikvy1+X+guPIB" crossorigin="anonymous"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.4/js/bootstrap.min.js" integrity="sha384-VjEeINv9OSwtWFLAtmc4JCtEJXXBub00gtSnszmspDLCtC0I4z4nqz7rEFbIZLLU" crossorigin="anonymous"></script>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css">
+	<style>
+		body{
+			margin:0;
+			background: #eee;
+		}
+		#map{
+			width: 100%;
+			height: 500px;
+			box-sizing: border-box;
+		}
+		.main{
+			margin-top: 20px;
+			background: #fff;
+			box-shadow: 0px 4px 2px -2px #ccc;
+			padding: 1rem;
+			position: relative;
+			margin-left: 15px;
+			margin-right: 15px;
+		}
+		.left{
+			overflow: auto;
+			height: 500px;
+		}
+		.searching input, .searching button{
+			border-radius: 0px;
+		}
+		.card{
+			width: 100%;
+			height: 120px;
+			background:#fff;
+			margin:0 auto;
+			box-shadow: 0px 3px 2px -2px #ccc;
+			box-sizing:border-box;
+			line-height:1.2;
+			font-family: "Segoe UI";
+			position:relative;
+			display:flex;
+			cursor:pointer;
+			transition:all 0.10s ease-in-out;
+			border:1px solid #eee;
+			border-radius: 0px;
+		}
+		.card:hover{
+			box-shadow: 0px 4px 5px -2px #ccc;
+			background:#fdfdfd;
+		}
+		.card .img{
+			width:100%;
+			height:100%;
+		}
+		.card .img img{
+			width:100%;
+			height:100%;
+		}
+		.card .block{
+			padding: 1rem;  
+		}
+		.card .title{
+			font-size: 16px;
+			font-weight:bold;
+			margin-bottom: 10px;
+		}
+		.card .block p{
+			text-align:justify;
+			font-size: 12px;
+		}
+		.imagenes{
+width:200px;
+height:150px
+}
+	</style>
+</head>
+<body>
+	<div class="container-fluid main">
+		<div class="row">
+			<div class="col-xs-3 left">
+				<div class="input-group searching">
+						<input type="text" class="form-control" placeholder="Search...">
+						<span class="input-group-btn">
+							<button class="btn btn-secondary"><i class="fa fa-search"></i></button>
+						</span>
+					</div>
+				<hr>
+				<div class="row">
+					<div class="col-xs-12">
+						<div class="card-img-top">
+							<div class="img">
+								<img id='img1' class='imagenes' src="http://placehold.it/400x300/3BE/FFF" alt="logo">
+							</div>
+							<div class="block">
+								<div class="title" ><h4 id='txt_no'>Nombre</h4></div>
+								<p id='texto'>Informacion.</p>
+							</div>
+						</div>
+					</div>
+					<!--separados -->
+					
+				</div>
+				<br>
+			</div>
+			<div class="col-xs-9 right">
+				<div id="map"></div>
+			</div>
+		</div>
+	</div>
+
+	<script>
+		 /*var map;
+		function initMap() {
+			map = new google.maps.Map(document.getElementById('map'), {
+				center: {lat: 18.521283, lng: -69.883229},
+				zoom: 8
+			});
+
+		}*/
+		function initMap() {
+  var mapCanvas = document.getElementById("map");
+  var mapOptions = {
+    center: new google.maps.LatLng(18.521283, -69.883229
+), 
+    zoom: 10
+  }
+  var latitud=(18.521283);
+  var longitud =(-69.883229);
+  var map = new google.maps.Map(mapCanvas, mapOptions);
+  
+  var coorMarcador = new google.maps.LatLng(latitud,longitud);
+  var marcador = new google.maps.Marker({
+/*Creamos un marcador*/
+                position: coorMarcador, /*Lo situamos en nuestro punto */
+                map: map, /* Lo vinculamos a nuestro mapa */
+                title: "Dónde estoy?" 
+            });
+	marcador.addListener('mouseover', function() {
+    document.getElementById('img1').src='est.jpg';
+    document.getElementById('txt_no').innerHTML='Gasolinera Total';
+    document.getElementById('texto').innerHTML='Aqui mostraremos la informacion necesaria de cada estacion';
+  });
+  
+  marcador.addListener('mouseout', function() {
+    document.getElementById('img1').src='http://placehold.it/400x300/3BE/FFF';
+	    document.getElementById('texto').innerHTML='Informacion';
+	    document.getElementById('txt_no').innerHTML='Nombre';
+
+  });
+					
+}
+	</script>
+	<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCH7BUCoBIt3AFY6_ertXOw-Hh60bVeFHw&callback=initMap"
+	async defer></script>
+</body>
+</html>
