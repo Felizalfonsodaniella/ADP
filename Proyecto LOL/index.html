@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Proyecto - Bienvenido</title>
+    <meta name="viewport" content="width=device-width">
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+    <title>JS Bin</title>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCH7BUCoBIt3AFY6_ertXOw-Hh60bVeFHw&libraries=places&callback=initMap"
+    async defer></script>
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>    
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/rateYo/2.2.0/jquery.rateyo.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/rateYo/2.2.0/jquery.rateyo.min.js"></script>
+    <script src="script.js"></script>
+</head>
+<body>
+    <header>
+        <span class="header title">Administracion de Proyecto: Gasolineras</span>
+        <div class="time">
+            <label class="hh">00</label> :
+            <label class="mm">00</label> :
+            <label class="ss">00</label> &nbsp &nbsp -
+        </div>
+        <div class="date">
+            <span class="day"></span> /
+            <span class="month"></span> /
+            <span class="year"></span>
+        </div>
+    </header>
+    <div class="container">
+        <div class="card">
+            <div class="one">
+                <img src="http://mdbootstrap.com/images/reg/reg%20(59).jpg" alt="" id="img_carta">
+                <div class="title-box">
+                    <h4 class="card-title" id='titulo_carta'>Estacion Total</h4>
+                    <span class="subtitle">Gasolinera</span>
+                    <div class="rating">
+                        <span class="number">0</span>
+                        <div id="rateYo"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="two">
+                <div class="card-item">
+                    <div class="icon"><i class="fa fa-phone"></i></div>
+                    <div class="info"><label class="phone" id='tel_carta'>+1 (809)-595-6264</label></div>
+                </div>
+                <br>
+                <div class="card-item">
+                    <div class="icon"><i class="fa fa-map-marker"></i></div>
+                    <div class="info"><label class="address" id='dir_carta'>Aut. Las Americas KM 5, Santo Domingo</label></div>
+                </div>
+                <br>
+                <div class="card-item">
+                    <div class="icon"><i class="fa fa-globe"></i></div>
+                    <div class="info"><a href="#" class="website" id='web_carta'>http://www.total.com.do</a></div>
+                </div>
+                <br>
+                <div class="card-item">
+                    <div class="icon"><i class="fa fa-clock-o"></i></div>
+                    <div class="info"><label class="horario" id='hora_carta' >Abierto las 24 horas</label></div>
+                </div>
+                <hr>
+                <div class="precio">
+                    <h4 class="p">Precios del Combustible</h4>
+                    <ul class="list-group">
+                        <li class="list-group-item">
+                            <span class="tag tag-default tag-pill float-xs-right">RD$202.80</span> Gasolina Premium
+                        </li>
+                        <li class="list-group-item">
+                            <span class="tag tag-default tag-pill float-xs-right">RD$186.70</span> Gasolina Regular
+                        </li>
+                        <li class="list-group-item">
+                            <span class="tag tag-default tag-pill float-xs-right">RD$159.10</span> Gasoil Optimo
+                        </li>
+                        <li class="list-group-item">
+                            <span class="tag tag-default tag-pill float-xs-right">RD$145.50</span> Gasoil Regular
+                        </li>
+                        <li class="list-group-item">
+                            <span class="tag tag-default tag-pill float-xs-right">RD$133.00</span> Kerosene
+                        </li>
+                        <li class="list-group-item">
+                            <span class="tag tag-default tag-pill float-xs-right">RD$95.10</span> Gas Licuado de Petróleo (GLP)
+                        </li>
+                        <li class="list-group-item">
+                            <span class="tag tag-default tag-pill float-xs-right">RD$23.22</span> Gas Natural Vehicular (GNV)
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div id="map"></div>
+    </div>
+
+    <script>
+        $("#rateYo").rateYo({
+            ratedFill: "#ffffff",
+            normalFill: "#A0A0A0",
+            rating: 0,
+            readOnly: true,
+            starWidth: "25px"
+        });        
+    </script>
+</body>
+</html>
